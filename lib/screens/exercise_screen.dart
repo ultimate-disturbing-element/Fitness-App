@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 class ExerciseScreen extends StatefulWidget {
   
-final Exercises exercises;
-final int seconds;
+final Exercises? exercises;
+final int? seconds;
 
 ExerciseScreen({this.exercises,this.seconds});
 
@@ -18,10 +18,10 @@ ExerciseScreen({this.exercises,this.seconds});
 
 class _ExerciseScreenState extends State<ExerciseScreen> {
 
-  bool _isCompleted;
+  bool? _isCompleted;
   int _elapsedSeconds=0;
 
-  Timer timer;
+  Timer? timer;
 
   @override
   void initState(){
@@ -45,7 +45,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   }
   @override
   void dispose(){
-    timer.cancel();
+    timer?.cancel();
     super.dispose();
   }
    @override
@@ -55,7 +55,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
          children: <Widget>[
            Center(
              child: CachedNetworkImage(
-               imageUrl: widget.exercises.gif,
+               imageUrl: widget.exercises?.gif ?? '',
                placeholder: (context,url)=> Image(image:AssetImage("assets/image3.jpeg"),
                fit: BoxFit.cover,
                height: MediaQuery.of(context).size.height,

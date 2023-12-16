@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import "package:http/http.dart" as http;
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
 
   final String apiUrl ="https://raw.githubusercontent.com/codeifitech/fitness-app/master/exercises.json";
 
-  ExerciseHub exercisehub;
+  ExerciseHub? exercisehub;
 
   @override
   void initState(){
@@ -25,11 +25,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
   void getExercises()async{
-    var response= await http.get(apiUrl);
+    var response= await http.get(Uri.parse(apiUrl));
     var body= response.body;
     var decodedJson=jsonDecode(body);
     exercisehub=ExerciseHub.fromJson(decodedJson);
     setState((){});
+    print(exercisehub);
     return decodedJson;
     }
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
        body: Container(
          child: exercisehub!=null ? 
          ListView(
-           children: exercisehub.exercises.map((e) {
+           children: exercisehub?.exercises?.map((e) {
              return InkWell(
                 onTap: (){
 
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
            )
                 )
              );
-           }).toList(),
+           }).toList() ?? [],
 
            )
          :LinearProgressIndicator(),
